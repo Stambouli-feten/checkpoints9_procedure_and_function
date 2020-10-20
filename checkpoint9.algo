@@ -1,0 +1,131 @@
+
+// 1ère partie
+// procédure qui fait le produit de deux vecteurs
+PROCEDURE dot_product(v : ARRAY_OF point[],VAR ps:INTEGER, point :	STRUCT
+                                                                    x : INTEGER;
+                                                                    y : INTEGER;
+                                                                    END_STRUCT)
+VAR
+    i:INTEGER:=0;
+BEGIN
+    REPEAT
+        READ(v[i].x);
+        READ(v[i].y);
+        i:=i+1;
+    UNTIL (i=v.length-1)
+    FOR i FROM 0 TO v.length-1  STEP 2 DO
+        ps:=v[i].x * v[i+1].x + v[i].y * v[i+1].y ;
+        WRITE(ps);
+    END_FOR
+END
+
+
+
+// 2ème partie
+// procédure qui nous informe si les deux vecteurs sont orthogonaux ou non
+PROCEDURE test_ps(ps:INTEGER)
+VAR
+
+BEGIN
+    IF (ps=0) THEN
+            WRITE("les deux vecteurs sont orthogonaux");
+        ELSE
+            WRITE("les deux vecteurs ne sont pas orthogonaux");
+        END_IF
+END
+
+// algorithme avec la procédure dot_product et la procédure test_ps
+ALGORITHM vect_orthogonal
+VAR
+    point :	STRUCT
+            x : INTEGER;
+            y : INTEGER;
+            END_STRUCT
+    v : ARRAY_OF point[];
+    ps: INTEGER;
+BEGIN
+    dot_product(v,ps,point);
+    test_ps(ps);
+    END_FOR
+END
+
+
+
+// 3ème partie
+// transformer dot_product en une fonction 
+FUNCTION dot_product(v : ARRAY_OF point[], point :	STRUCT
+                                                    x : INTEGER;
+                                                    y : INTEGER;
+                                                    END_STRUCT) : INTEGER
+VAR
+    i:INTEGER:=0;
+BEGIN
+    REPEAT
+        READ(v[i].x);
+        READ(v[i].y);
+        i:=i+1;
+    UNTIL (i=v.length-1)
+    FOR i FROM 0 TO v.length-1  STEP 2 DO
+        ps:=v[i].x * v[i+1].x + v[i].y * v[i+1].y ;
+        WRITE(ps);
+    END_FOR
+        RETURN ps ;
+END
+
+
+// transformer test_ps en une fonction
+FUNCTION test_ps(ps:INTEGER):STRING
+VAR
+
+BEGIN
+    IF (ps=0) THEN
+            msg:="les deux vecteurs sont orthogonaux";
+        ELSE
+            msg:="les deux vecteurs ne sont pas orthogonaux";
+        END_IF
+        RETURN(msg)
+END
+
+
+// nouveau algorithme avec la fonction dot_product et la fonction test_ps
+ALGORITHM vect_orthogonal
+VAR
+    point :	STRUCT
+            x : INTEGER;
+            y : INTEGER;
+            END_STRUCT
+    v : ARRAY_OF point[];
+    ps: INTEGER;
+    msg:STRING;
+BEGIN
+    ps:=dot_product(v,point);
+    msg:=test_ps(ps);
+    END_FOR
+END
+
+
+// facultatif : algorithme sans procédures et sans fonctions
+ALGORITHM vect_orthogonal
+VAR
+    i:INTEGER:=0;
+    point :	STRUCT
+            x : INTEGER;
+            y : INTEGER;
+            END_STRUCT
+    v : ARRAY_OF point[];
+    ps: INTEGER;
+BEGIN
+    REPEAT
+        READ(v[i].x);
+        READ(v[i].y);
+        i:=i+1;
+    UNTIL (i=v.length-1)
+    FOR i FROM 0 TO v.length-1  STEP 2 DO
+        ps:=v[i].x * v[i+1].x + v[i].y * v[i+1].y ;
+        IF (ps=0) THEN
+            WRITE("v["i+1"] et v["i+2"] sont orthogonaux");
+        ELSE
+            WRITE("v["i+1"] et v["i+2"] ne sont pas orthogonaux");
+        END_IF
+    END_FOR
+END
